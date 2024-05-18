@@ -6,10 +6,9 @@ import {
   HTTPClientError,
 } from "../../domain/errors/http-exception";
 import { MESSAGE_CODES } from "../utils/message-codes";
-import { ILogger } from "../../domain/interface/ILogger";
 
 export class ErrorMiddleware {
-  constructor(private logger: ILogger) {}
+  constructor() {}
 
   public routeNotFoundErrorHandler = (_req: Request, res: Response): void => {
     // res.status(httpStatus.NOT_FOUND).json({ message: MESSAGE_CODES.NOT_FOUND });
@@ -29,9 +28,7 @@ export class ErrorMiddleware {
     next: NextFunction
   ): void => {
     if (err instanceof HTTPClientError) {
-      this.logger.error(
-        `${req.method.toUpperCase()}: ${req.path}  client errror ${err.message}`
-      );
+      console.log(err.message);
       res.status(err.statusCode).send({ message: err.message });
     } else {
       next(err);
@@ -56,7 +53,8 @@ export class ErrorMiddleware {
     res: Response,
     _next: NextFunction
   ): Response => {
-    this.logger.error(err.message);
+    // this.logger.error(err.message);
+    console.log(err.message);
     return res
       .status(httpStatus.INTERNAL_SERVER_ERROR)
       .send({ message: MESSAGE_CODES.INTERNAL_SERVER_ERROR });

@@ -1,6 +1,21 @@
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
 enum UserRole {
     ADMIN
     CUSTOMER
+}
+
+enum OrderStatus {
+    PENDING
+    DELIVERED
 }
 
 model User {
@@ -8,22 +23,64 @@ model User {
     email      String    @unique
     first_name String
     last_name  String
-    imageUrl   String
+    imageUrl   String?
     password   String
     role       UserRole
     created_at DateTime? @default(now())
     updated_at DateTime? @updatedAt
     deleted_at DateTime?
     Products   Product[]
+    Orders     Order[]
+    Cart       Cart[]
 }
 
 model Product {
-    id         String    @id @default(uuid())
-    user       User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    id         String       @id @default(uuid())
+    user       User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
     user_id    String
     name       String
     price      Float
     imageUrl   String
+    created_at DateTime?    @default(now())
+    updated_at DateTime?    @updatedAt
+    deleted_at DateTime?
+    OrderItems OrderItems[]
+    Cart       Cart[]
+}
+
+model Order {
+    id           String       @id @default(uuid())
+    user         User         @relation(fields: [user_id], references: [id])
+    user_id      String
+    order_date   DateTime?    @default(now())
+    total_amount Float
+    status       OrderStatus?
+    order_items  OrderItems[]
+    created_at   DateTime?    @default(now())
+    updated_at   DateTime?    @updatedAt
+    deleted_at   DateTime?
+}
+
+model OrderItems {
+    id         String    @id @default(uuid())
+    orders     Order?    @relation(fields: [ordersId], references: [id])
+    ordersId   String?
+    product    Product?  @relation(fields: [product_id], references: [id])
+    product_id String
+    quantity   Int
+    unit_price Float
+    created_at DateTime? @default(now())
+    updated_at DateTime? @updatedAt
+    deleted_at DateTime?
+}
+
+model Cart {
+    id         String    @id @default(uuid())
+    product    Product?  @relation(fields: [product_id], references: [id])
+    product_id String
+    quantity   Int
+    user       User?     @relation(fields: [user_id], references: [id])
+    user_id    String
     created_at DateTime? @default(now())
     updated_at DateTime? @updatedAt
     deleted_at DateTime?
