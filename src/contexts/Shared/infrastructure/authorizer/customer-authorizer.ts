@@ -12,7 +12,7 @@ export class JWTCustomerAuthorizer implements IAuthorizer<Request, Response, Nex
         const token = tokenArray[1];
 
         try {
-            const payload: Payload = jwt.verify(token, process.env.JWT_SECRET_TOKEN!) as Payload
+            const payload: Payload = jwt.verify(token, process.env.JWT_SECRET_KEY!) as Payload
             if(payload.role === UserRole.CUSTOMER && payload.scope.includes(TokenScope.CUSTOMER_ACCESS)) {
                 req.body.user = payload;
                 return next()

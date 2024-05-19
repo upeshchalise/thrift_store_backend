@@ -11,7 +11,7 @@ export class JWTRefreshAuthorizer implements IAuthorizer<Request, Response, Next
         const token = tokenArray[1];
 
         try {
-            const payload: Payload = jwt.verify(token, process.env.JWT_SECRET_TOKEN!) as Payload
+            const payload: Payload = jwt.verify(token, process.env.JWT_SECRET_KEY!) as Payload
             if(payload.scope.includes(TokenScope.REFRESH)) {
                 req.body.user = payload;
                 return next()

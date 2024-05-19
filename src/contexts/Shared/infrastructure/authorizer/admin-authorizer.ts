@@ -6,24 +6,14 @@ import { Payload, TokenScope } from '../../domain/interface/payload';
 import { IAuthorizer } from '../../domain/model/authentication/IAuthorizer';
 
 export class JWTAdminAuthorizer implements IAuthorizer<Request, Response, NextFunction> {
-    public authorize : Middleware = async (req:Request,res:Response, next: NextFunction):Promise<void> => {
+    public authorize : Middleware = async (req:any,res:Response, next: NextFunction):Promise<void> => {
         const { authorization } = req.headers;
-        if (!authorization) {
-            return next(new HTTP401Error("Authorization header is missing"));
-        }
-
-        const [bearer, token] = authorization.split(' ');
-        if (bearer !== 'Bearer' || !token) {
-            return next(new HTTP401Error("Invalid Authorization header format"));
-        }
-        console.log("upto here");
+        const tokenArray = authorization !== undefined ? authorization.split(' ') : [];
+        const token = tokenArray[1];
         try {
-            console.log("upto here 2");
-            console.log(token);
-            const payload: Payload = jwt.verify(token, process.env.JWT_SECRET_TOKEN!) as Payload
-            console.log("here is payload", payload);
+            const payload: Payload = jwt.verify(token, process.env.JWT_SECRET_KEY!) as Payload
             if(payload.role === UserRole.ADMIN && payload.scope.includes(TokenScope.ADMIN_ACCESS)) {
-                req.body.user = payload;
+                req.user = payload;
                 return next()
             } else {
                 return next(new HTTP401Error())

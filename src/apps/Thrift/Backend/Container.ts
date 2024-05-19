@@ -6,6 +6,7 @@ import { ErrorMiddleware } from '../../../contexts/Shared/infrastructure/middlew
 import { createPrismaClient } from '../../../contexts/Shared/infrastructure/persistence/prisma';
 import { upload } from '../../../contexts/Shared/infrastructure/uploads/image-upload';
 import { CreateProductService } from '../../../contexts/Thrift/Product/application/create-product.service';
+import { PrismaProductRepository } from '../../../contexts/Thrift/Product/infrastructure/repository/prisma-product.repository';
 import { CreateProductSeeder } from '../../../contexts/Thrift/Product/infrastructure/seeder/create-product.seeder';
 import { CreateUserService } from '../../../contexts/Thrift/User/application/create-user.service';
 import { GetUserByEmailService } from '../../../contexts/Thrift/User/application/get-user-by-email.service';
@@ -55,7 +56,7 @@ export class Container {
       .register({
         createProductService: asClass(CreateProductService).singleton(),
         createProductController: asClass(controllers.CreateProductController),
-        productRepository: asClass(PrismaUserRepository).singleton()
+        productRepository: asClass(PrismaProductRepository).singleton()
       })
       .register({
         adminAuthorizer: asClass(JWTAdminAuthorizer).singleton(),
