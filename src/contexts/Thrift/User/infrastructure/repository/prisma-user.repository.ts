@@ -6,7 +6,7 @@ export class PrismaUserRepository implements IUserRepository {
     constructor(private db: PrismaClient){}
 
 
-    async create(email:string,password:string,first_name:string,last_name:string,role: UserRole, imageUrl?:string):Promise<void> {
+    async create(email:string,password:string,first_name:string,last_name:string,role: UserRole, imageUrl?:string | null):Promise<void> {
         const user_id = randomUUID()
         await this.db.user.create({
             data: {

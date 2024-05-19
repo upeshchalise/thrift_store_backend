@@ -8,7 +8,7 @@ export const adminSeeder = {
     first_name: 'admin',
     last_name: 'admin',
     role: UserRole.ADMIN,
-    imageUrl: 'admin.png'
+    imageUrl: 'file-2395a7b9-1d18-4f7c-8127-8957f03d07ff.png'
 }
 
 export class CreateAdminSeeder {
