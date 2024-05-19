@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { randomUUID } from "crypto";
 import { adminSeeder } from "../../../User/infrastructure/seeder/create-admin-seeder";
 
 const seedProducts = [
@@ -59,7 +58,6 @@ export class CreateProductSeeder {
             const products = seedProducts;
             await Promise.all(
                 products.map(async product => {
-                    const product_id = randomUUID();
 
                     await this.db.product.upsert({
                         where: {
@@ -72,7 +70,7 @@ export class CreateProductSeeder {
                             imageUrl: product.imageUrl
                         },
                         create: {
-                            id: product_id,
+                            id: product.id,
                             user_id: user.id,
                             name: product.name,
                             price: product.price,

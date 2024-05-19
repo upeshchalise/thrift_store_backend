@@ -3,7 +3,7 @@ import { PrismaUserRepository } from "../infrastructure/repository/prisma-user.r
 
 export class CreateUserService {
     constructor(private userRepository: PrismaUserRepository){}
-    public async invoke(createActivityRequest: CreateUserRequest) {
+    public async invoke(createActivityRequest: CreateUserRequest):Promise<void> {
         await this.userRepository.create(createActivityRequest.email,createActivityRequest.password,createActivityRequest.first_name,createActivityRequest.last_name,createActivityRequest.role, createActivityRequest.imageUrl)
     }
 }
