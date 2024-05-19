@@ -5,11 +5,12 @@ import { UserRoutesHandler } from './user/user.routes';
 
 export const MasterRouter = (
     healthCheckControllers: controllers.HealthCheckController,
-    getUserByEmailController: controllers.GetUserByEmailController
+    getUserByEmailController: controllers.GetUserByEmailController,
+    createUserController: controllers.CreateUserController
 ) : Router => {
     const apiRouter = Router();
     healthCheckRoutesHandler(healthCheckControllers, apiRouter);
-    UserRoutesHandler(getUserByEmailController, apiRouter)
+    UserRoutesHandler(getUserByEmailController, createUserController,apiRouter)
 
     return apiRouter
 }
