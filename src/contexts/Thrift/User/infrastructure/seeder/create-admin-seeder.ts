@@ -17,7 +17,8 @@ export class CreateAdminSeeder {
         try {
             const isAdminExist = await this.userRepository.getUserByEmail(adminSeeder.email) !== null;
             if(!isAdminExist) {
-                await this.userRepository.create(adminSeeder.email, hashPassword(adminSeeder.password), adminSeeder.first_name, adminSeeder.last_name, adminSeeder.role,adminSeeder.imageUrl)
+                const hashedPassword =  hashPassword(adminSeeder.password)
+                await this.userRepository.create(adminSeeder.email, hashedPassword, adminSeeder.first_name, adminSeeder.last_name, adminSeeder.role,adminSeeder.imageUrl)
             }
         } catch (error) {
             console.log(error)

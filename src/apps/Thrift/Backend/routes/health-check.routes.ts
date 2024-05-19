@@ -6,8 +6,6 @@ export const healthCheckRoutesHandler = (healthCheckControllers: controllers.Hea
   router.get(
     '/health_check',
     healthCheckControllers.invoke.bind(healthCheckControllers)
-    /*#swagger.tags = ['Health Check']
-     */
   );
   return router;
 };
