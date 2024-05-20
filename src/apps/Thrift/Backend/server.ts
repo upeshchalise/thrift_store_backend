@@ -2,7 +2,6 @@ import * as dotenv from 'dotenv';
 import express from 'express';
 import * as http from 'http';
 import { AddressInfo } from 'net';
-import path from 'path';
 dotenv.config()
 
 export class Server {
@@ -12,7 +11,7 @@ export class Server {
     constructor(private router: express.Router){
         this.express = express();
         this.express.use(this.router)
-        this.express.use(express.static(path.join(__dirname, 'public')))
+        this.express.use(express.static('public'))
     }
 
     public start = async () : Promise<void> => {
