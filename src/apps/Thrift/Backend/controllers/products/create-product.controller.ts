@@ -20,7 +20,6 @@ export class CreateProductController implements Controller {
         console.log(user_id,name, price);
         const imageUrl = req.file ?  req.file.filename : null;
         const imageUrlFromFormData = req.file ? req.file.filename : null;
-
         const product = await this.createProductService.invoke({user_id,name, price: Number(price), imageUrl: imageUrl || imageUrlFromFormData} )
 
         res.status(httpStatus.CREATED).send()
