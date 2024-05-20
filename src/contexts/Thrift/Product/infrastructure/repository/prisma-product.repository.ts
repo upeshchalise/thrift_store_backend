@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Product } from "@prisma/client";
 import { randomUUID } from "crypto";
 import { IProductRepository } from "../../domain/repository/product.repository";
 
@@ -16,5 +16,15 @@ export class PrismaProductRepository implements IProductRepository {
                 imageUrl
             }
         })
+    }
+
+    async getProductsByUserId(userId:string) : Promise<Product[]> {
+        const response = await this.db.product.findMany({
+            where: {
+                user_id: userId
+            }
+        })
+        console.log(response);
+        return response
     }
 }

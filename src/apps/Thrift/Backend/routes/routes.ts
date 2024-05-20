@@ -11,12 +11,13 @@ export const MasterRouter = (
     createUserController: controllers.CreateUserController,
     loginUserController: controllers.LoginUserController,
     createProductController: controllers.CreateProductController,
+    getProductsByUserIdController: controllers.GetProductsByUserIdController,
     adminAuthorizer:IAuthorizer<Request,Response,NextFunction>
 ) : Router => {
     const apiRouter = Router();
     healthCheckRoutesHandler(healthCheckControllers, apiRouter);
     UserRoutesHandler(getUserByEmailController, createUserController,loginUserController,apiRouter)
-    productRoutesHandler(createProductController,adminAuthorizer, apiRouter)
+    productRoutesHandler(createProductController,getProductsByUserIdController,adminAuthorizer, apiRouter)
 
     return apiRouter
 }
