@@ -9,7 +9,6 @@ export class GetProductsByUserIdController implements Controller {
         try {
             const {userId} = req.params;
             const response = await this.getProductsByUserIdService.invoke(userId)
-            console.log(response);
             res.status(httpStatus.OK).send(response)
         } catch (error) {
             next(error);
