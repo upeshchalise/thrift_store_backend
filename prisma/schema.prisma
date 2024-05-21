@@ -35,17 +35,19 @@ model User {
 }
 
 model Product {
-    id         String       @id @default(uuid())
-    user       User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
-    user_id    String
-    name       String
-    price      Float
-    imageUrl   String?
-    created_at DateTime?    @default(now())
-    updated_at DateTime?    @updatedAt
-    deleted_at DateTime?
-    OrderItems OrderItems[]
-    Cart       Cart[]
+    id          String       @id @default(uuid())
+    user        User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    user_id     String
+    name        String
+    price       Float
+    imageUrl    String?
+    description String?
+    quantity    Int?
+    created_at  DateTime?    @default(now())
+    updated_at  DateTime?    @updatedAt
+    deleted_at  DateTime?
+    OrderItems  OrderItems[]
+    Cart        Cart[]
 }
 
 model Order {
