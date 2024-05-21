@@ -12,6 +12,6 @@ import { PrismaProductRepository } from "../infrastructure/repository/prisma-pro
 export class CreateProductService {
     constructor(private productRepository: PrismaProductRepository) {}
     async invoke(createActivityRequest: CreateProductRequest):Promise<void> {
-        await this.productRepository.createProduct(createActivityRequest.user_id, createActivityRequest.name,createActivityRequest.price,createActivityRequest.imageUrl!)
+        await this.productRepository.createProduct(createActivityRequest.user_id, createActivityRequest.name,createActivityRequest.description, createActivityRequest.quantity,createActivityRequest.price,createActivityRequest.imageUrl!)
     }
 }
