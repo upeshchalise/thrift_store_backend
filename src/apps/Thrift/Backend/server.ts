@@ -10,8 +10,8 @@ export class Server {
 
     constructor(private router: express.Router){
         this.express = express();
-        this.express.use(this.router)
         this.express.use(express.static('public'))
+        this.express.use(this.router)
     }
 
     public start = async () : Promise<void> => {
