@@ -6,7 +6,7 @@ import { Payload, TokenScope } from '../../domain/interface/payload';
 import { IAuthorizer } from '../../domain/model/authentication/IAuthorizer';
 
 export class JWTUserAuthorizer implements IAuthorizer<Request, Response, NextFunction> {
-    public authorize : Middleware = async (req:Request,res:Response, next: NextFunction):Promise<void> => {
+    public authorize : Middleware = async (req:any,res:Response, next: NextFunction):Promise<void> => {
         const {authorization} = req.headers;
         const tokenArray = authorization !== undefined ? authorization.split(' ') : [];
         const token = tokenArray[1];
@@ -15,7 +15,7 @@ export class JWTUserAuthorizer implements IAuthorizer<Request, Response, NextFun
             const validRoles = [UserRole.ADMIN, UserRole.CUSTOMER];
             const payload: Payload = jwt.verify(token, process.env.JWT_SECRET_KEY!) as Payload
             if(validRoles.includes(payload.role as any) && (payload.scope.includes(TokenScope.ADMIN_ACCESS) || payload.scope.includes(TokenScope.CUSTOMER_ACCESS))) {
-                req.body.user = payload;
+                req.user = payload;
                 return next()
             } else {
                 return next(new HTTP401Error())

@@ -17,7 +17,8 @@ export class CreateProductController implements Controller {
     ]
     async invoke(req:any, res:Response, next: NextFunction) : Promise<void> {
         // const user_id = req.headers.user_id as string;
-        const {user_id} = req.user
+        const { user_id } = req.user
+        console.log(user_id);
         const {name, price,description, quantity} = req.body;
         console.log(user_id,name, price);
         const imageUrl = req.file ?  req.file.filename : null;

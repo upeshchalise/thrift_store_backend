@@ -7,6 +7,6 @@ export const productRoutesHandler = (createProductController: controllers.Create
     router.post('/product/create',adminAuthorizer.authorize,upload.single('file'), createProductController.validate, createProductController.invoke.bind(createProductController))
     router.get('/products/:userId', adminAuthorizer.authorize, getProductsByUserIdController.invoke.bind(getProductsByUserIdController))
     router.get('/product/:productId', userAuthorizer.authorize,getProductByProductIdController.invoke.bind(getProductByProductIdController))
-    router.post('/product/update/:productId',adminAuthorizer.authorize,upload.single('file'), createProductController.validate, createProductController.invoke.bind(createProductController))
+    router.post('/product/update/:productId',adminAuthorizer.authorize,upload.single('file'), updateProductController.validate, updateProductController.invoke.bind(updateProductController))
     return router
 }
