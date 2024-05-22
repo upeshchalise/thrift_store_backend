@@ -6,11 +6,15 @@ import { ErrorMiddleware } from '../../../contexts/Shared/infrastructure/middlew
 import { createPrismaClient } from '../../../contexts/Shared/infrastructure/persistence/prisma';
 import { upload } from '../../../contexts/Shared/infrastructure/uploads/image-upload';
 import { CreateProductService } from '../../../contexts/Thrift/Product/application/create-product.service';
+import { GetProductByProductIdService } from '../../../contexts/Thrift/Product/application/get-product-by-product-id.service';
 import { GetProductsByUserIdService } from '../../../contexts/Thrift/Product/application/get-produts-by-user-id.service';
+import { UpdateProductService } from '../../../contexts/Thrift/Product/application/update-product.service';
 import { PrismaProductRepository } from '../../../contexts/Thrift/Product/infrastructure/repository/prisma-product.repository';
 import { CreateProductSeeder } from '../../../contexts/Thrift/Product/infrastructure/seeder/create-product.seeder';
 import { CreateUserService } from '../../../contexts/Thrift/User/application/create-user.service';
 import { GetUserByEmailService } from '../../../contexts/Thrift/User/application/get-user-by-email.service';
+import { GetUserByIdService } from '../../../contexts/Thrift/User/application/get-user-by-id.service';
+import { UpdateUserService } from '../../../contexts/Thrift/User/application/update-user.service';
 import { PrismaUserRepository } from '../../../contexts/Thrift/User/infrastructure/repository/prisma-user.repository';
 import { CreateAdminSeeder } from '../../../contexts/Thrift/User/infrastructure/seeder/create-admin-seeder';
 import * as controllers from './controllers';
@@ -51,7 +55,11 @@ export class Container {
         getUserByEmailController: asClass(controllers.GetUserByEmailController),
         createUserService: asClass(CreateUserService).singleton(),
         createUserController: asClass(controllers.CreateUserController),
+        getUserByIdService: asClass(GetUserByIdService).singleton(),
+        getUserByIdController: asClass(controllers.GetUserByIdController).singleton(),
         loginUserController: asClass(controllers.LoginUserController),
+        updateUserService: asClass(UpdateUserService).singleton(),
+        updateUserController: asClass(controllers.UpdateUserController).singleton(),
         userRepository: asClass(PrismaUserRepository).singleton()
       })
       .register({
@@ -59,6 +67,10 @@ export class Container {
         createProductController: asClass(controllers.CreateProductController),
         getProductsByUserIdController: asClass(controllers.GetProductsByUserIdController).singleton(),
         getProductsByUserIdService: asClass(GetProductsByUserIdService).singleton(),
+        getProductByProductIdService: asClass(GetProductByProductIdService).singleton(),
+        getProductByProductIdController: asClass(controllers.GetProductByProductIdController),
+        updateProductService:asClass(UpdateProductService).singleton(),
+        updateProductController: asClass(controllers.UpdateProductController),
         productRepository: asClass(PrismaProductRepository).singleton()
       })
       .register({

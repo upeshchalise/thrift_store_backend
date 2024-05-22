@@ -79,4 +79,39 @@ console.log("object", search);
       };
         return {meta, data: response}
     }
+
+  async getProductsByProductId(product_id: string): Promise<Product | null> {
+    return this.db.product.findFirst({
+        where: {
+            id: product_id
+        },
+        include: {
+            user: {
+                select: {
+                    first_name: true,
+                    last_name:true,
+                    email: true,
+                    imageUrl: true,
+                    id:true
+                }
+            }
+        }
+    })
+  }
+
+   async updateProduct(product_id: string, name: string, description: string, quantity: number, price: number, imageUrl?: string | undefined): Promise<void> {
+    await this.db.product.update({
+        where: {
+            id: product_id
+        },
+        data: {
+            name,
+            description,
+            quantity,
+            price,
+            imageUrl,
+            updated_at: new Date()
+        }
+    })
+  }
 }

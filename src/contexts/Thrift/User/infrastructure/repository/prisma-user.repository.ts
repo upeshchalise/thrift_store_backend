@@ -37,4 +37,33 @@ export class PrismaUserRepository implements IUserRepository {
             role: user.role
         } : null
     }
+
+    async getUserById(userId:string) : Promise<Partial<User> | null> {
+        return await this.db.user.findFirst({
+            where: {
+                id: userId
+            },
+            select: {
+                id: true,
+                first_name: true,
+                last_name: true,
+                email: true,
+                role: true,
+            }
+        })
+    }
+
+    async updateUser(userId:string, first_name:string, last_name:string, imageUrl?:string) : Promise<void> {
+         await this.db.user.update({
+            where: {
+                id: userId
+            },
+            data: {
+                first_name,
+                last_name,
+                imageUrl,
+                updated_at: new Date()
+            }
+        })
+    }
 }

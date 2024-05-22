@@ -12,12 +12,17 @@ export const MasterRouter = (
     loginUserController: controllers.LoginUserController,
     createProductController: controllers.CreateProductController,
     getProductsByUserIdController: controllers.GetProductsByUserIdController,
+    getProductByProductIdController: controllers.GetProductByProductIdController,
+    getUserByIdController: controllers.GetUserByIdController,
+    updateUserController: controllers.UpdateUserController,
+    updateProductController: controllers.UpdateProductController,
+    userAuthorizer: IAuthorizer<Request,Response,NextFunction>,
     adminAuthorizer:IAuthorizer<Request,Response,NextFunction>
 ) : Router => {
     const apiRouter = Router();
     healthCheckRoutesHandler(healthCheckControllers, apiRouter);
-    UserRoutesHandler(getUserByEmailController, createUserController,loginUserController,apiRouter)
-    productRoutesHandler(createProductController,getProductsByUserIdController,adminAuthorizer, apiRouter)
+    UserRoutesHandler(getUserByEmailController, createUserController,loginUserController,getUserByIdController,updateUserController, userAuthorizer,apiRouter)
+    productRoutesHandler(createProductController,getProductByProductIdController,getProductsByUserIdController,updateProductController,userAuthorizer,adminAuthorizer, apiRouter)
 
     return apiRouter
 }
