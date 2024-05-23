@@ -6,6 +6,7 @@ import { ErrorMiddleware } from '../../../contexts/Shared/infrastructure/middlew
 import { createPrismaClient } from '../../../contexts/Shared/infrastructure/persistence/prisma';
 import { upload } from '../../../contexts/Shared/infrastructure/uploads/image-upload';
 import { CreateProductService } from '../../../contexts/Thrift/Product/application/create-product.service';
+import { DeleteProductService } from '../../../contexts/Thrift/Product/application/delete-product.service';
 import { GetProductByProductIdService } from '../../../contexts/Thrift/Product/application/get-product-by-product-id.service';
 import { GetProductsByUserIdService } from '../../../contexts/Thrift/Product/application/get-produts-by-user-id.service';
 import { UpdateProductService } from '../../../contexts/Thrift/Product/application/update-product.service';
@@ -71,6 +72,8 @@ export class Container {
         getProductByProductIdController: asClass(controllers.GetProductByProductIdController),
         updateProductService:asClass(UpdateProductService).singleton(),
         updateProductController: asClass(controllers.UpdateProductController),
+        deleteProductService:asClass(DeleteProductService).singleton(),
+        deleteProductController: asClass(controllers.DeleteProductController), 
         productRepository: asClass(PrismaProductRepository).singleton()
       })
       .register({

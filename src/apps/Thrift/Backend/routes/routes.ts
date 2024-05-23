@@ -16,13 +16,14 @@ export const MasterRouter = (
     getUserByIdController: controllers.GetUserByIdController,
     updateUserController: controllers.UpdateUserController,
     updateProductController: controllers.UpdateProductController,
+    deleteProductController: controllers.DeleteProductController,
     userAuthorizer: IAuthorizer<Request,Response,NextFunction>,
     adminAuthorizer:IAuthorizer<Request,Response,NextFunction>
 ) : Router => {
     const apiRouter = Router();
     healthCheckRoutesHandler(healthCheckControllers, apiRouter);
     UserRoutesHandler(getUserByEmailController, createUserController,loginUserController,getUserByIdController,updateUserController, userAuthorizer,apiRouter)
-    productRoutesHandler(createProductController,getProductByProductIdController,getProductsByUserIdController,updateProductController,userAuthorizer,adminAuthorizer, apiRouter)
+    productRoutesHandler(createProductController,getProductByProductIdController,getProductsByUserIdController,updateProductController,deleteProductController,userAuthorizer,adminAuthorizer, apiRouter)
 
     return apiRouter
 }

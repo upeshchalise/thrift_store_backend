@@ -36,12 +36,13 @@ export class UpdateProductController implements Controller {
         if(user_id !== isProduct?.user_id) {
             throw new HTTP401Error(MESSAGE_CODES.PERMISSION_DENIED)
         }
-
+        const convertedQuantity = Number(quantity)
+        const convertedPrice = Number(price)
         if(imageUrl !== null ) {
-            await this.updateProductService.invoke(productId, name, description, quantity, price, imageUrl)
+            await this.updateProductService.invoke(productId, name, description, convertedQuantity, convertedPrice, imageUrl)
         }
         else {
-            await this.updateProductService.invoke(productId,name,description,quantity,price)
+            await this.updateProductService.invoke(productId,name,description,convertedQuantity,convertedPrice)
         }
 
         res.status(httpStatus.OK).send()

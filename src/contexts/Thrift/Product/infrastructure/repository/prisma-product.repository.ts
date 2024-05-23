@@ -38,8 +38,9 @@ console.log("object", search);
                         // {quantity: Number(search)},
                         // {price: Number(search)},
                     ]
-                    } : {}
-                ]
+                    } : {},
+                ],
+                deleted_at: null
             },
             orderBy: {
                 created_at: 'desc'
@@ -111,6 +112,17 @@ console.log("object", search);
             price,
             imageUrl,
             updated_at: new Date()
+        }
+    })
+  }
+
+  async deleteProduct(product_id: string): Promise<void> {
+    await this.db.product.update({
+        where: {
+            id: product_id
+        },
+        data: {
+            deleted_at: new Date()
         }
     })
   }

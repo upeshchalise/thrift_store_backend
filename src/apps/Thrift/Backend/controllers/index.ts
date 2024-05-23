@@ -1,5 +1,6 @@
 export * from './healthCheck/health-check.controller';
 export * from './products/create-product.controller';
+export * from './products/delete-product.controller';
 export * from './products/get-product-by-product-id.controller';
 export * from './products/get-products-by-user-id.controller';
 export * from './products/update-product.controller';
