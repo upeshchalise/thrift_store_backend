@@ -61,7 +61,8 @@ console.log("object", search);
                         // {price: Number(search)},
                     ]
                     } : {}
-                ]
+                ],
+                deleted_at: null
             }
         });
         const totalPages = Math.ceil(totalCount / newPageSize);
@@ -84,7 +85,8 @@ console.log("object", search);
   async getProductsByProductId(product_id: string): Promise<Product | null> {
     return this.db.product.findFirst({
         where: {
-            id: product_id
+            id: product_id,
+            deleted_at: null
         },
         include: {
             user: {
@@ -96,7 +98,7 @@ console.log("object", search);
                     id:true
                 }
             }
-        }
+        },
     })
   }
 
@@ -126,4 +128,65 @@ console.log("object", search);
         }
     })
   }
+
+
+//   all products
+async getAllProducts(page:number =1,pageSize:number = 10, search:string ='') : Promise<PaginationResult<Product>> {
+    let totalCount: number;
+console.log("object", search);
+const newPageSize = pageSize || 10;
+const newPage = page || 1;
+const skip = newPageSize * (newPage - 1);
+    const response = await this.db.product.findMany({
+        where: {
+            AND: [
+                search ? {
+                OR : [
+                    {name: {contains: search, mode: 'insensitive'}},
+                    {description: {contains: search, mode: 'insensitive'}},
+                    // {quantity: Number(search)},
+                    // {price: Number(search)},
+                ]
+                } : {},
+            ],
+            deleted_at: null
+        },
+        orderBy: {
+            created_at: 'desc'
+        },
+        skip,
+        take: newPageSize
+    })
+//  console.log('page: ', page, 'pagesize: ', pageSize, 'search: ', search);
+    totalCount = await this.db.product.count({
+        where: {
+            AND: [
+                search ? {
+                OR : [
+                    {name: {contains: search, mode: 'insensitive'}},
+                    {description: {contains: search, mode: 'insensitive'}},
+                    // {quantity: Number(search)},
+                    // {price: Number(search)},
+                ]
+                } : {}
+            ],
+            deleted_at: null
+        }
+    });
+    const totalPages = Math.ceil(totalCount / newPageSize);
+const lastPage = totalPages;
+const currentPage = newPage;
+const perPage = newPageSize;
+const prev = newPage > 1 ? newPage - 1 : null;
+const next = newPage < lastPage ? newPage + 1 : null;
+const meta: PaginationMeta = {
+    total: totalCount,
+    lastPage,
+    currentPage,
+    perPage,
+    prev,
+    next
+  };
+    return {meta, data: response}
+}
 }

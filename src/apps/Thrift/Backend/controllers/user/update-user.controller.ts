@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import { body } from "express-validator";
 import httpStatus from "http-status";
 import { HTTP404Error } from "../../../../../contexts/Shared/domain/errors/http-exception";
@@ -15,9 +15,14 @@ export class UpdateUserController implements Controller {
         body('last_name').exists().withMessage(MESSAGE_CODES.USER.INVALID_LAST_NAME).optional().isString().withMessage(MESSAGE_CODES.USER.INVALID_LAST_NAME).bail(),
         RequestValidator
     ]
-    async invoke (req:Request, res: Response, next: NextFunction) {
+    async invoke (req:any, res: Response, next: NextFunction) {
         const {userId} = req.params;
+        // const {user_id} = req.user;
+        // if (userId !== user_id) {
+        //     throw new HTTP401Error(MESSAGE_CODES.NOT_AUTHORIZED)
+        // }
         const {first_name, last_name} = req.body
+        console.log(userId,first_name,last_name);
         const imageUrl = req.file ?  req.file.filename : null;
         const imageUrlFromFormData = req.file ? req.file.filename : null;
         const isUser = await this.getUserByIdService.invoke(userId)

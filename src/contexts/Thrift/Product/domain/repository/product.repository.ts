@@ -11,4 +11,6 @@ export interface IProductRepository {
     updateProduct(product_id: string, name: string, description: string, quantity: number, price: number, imageUrl?: string): Promise<void>;
 
     deleteProduct(product_id: string): Promise<void>;
+
+     getAllProducts(page:number,pageSize:number, search:string) : Promise<PaginationResult<Product>>;
 }

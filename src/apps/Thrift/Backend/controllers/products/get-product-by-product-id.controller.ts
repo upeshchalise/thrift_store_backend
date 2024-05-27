@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
-import { GetProductByProductIdService } from "../../../../../contexts/Thrift/Product/application/get-product-by-product-id.service";
-import { Controller } from "../controller";
 import { HTTP404Error } from "../../../../../contexts/Shared/domain/errors/http-exception";
 import { MESSAGE_CODES } from "../../../../../contexts/Shared/infrastructure/utils/message-codes";
+import { GetProductByProductIdService } from "../../../../../contexts/Thrift/Product/application/get-product-by-product-id.service";
+import { Controller } from "../controller";
 
 export class GetProductByProductIdController implements Controller {
     constructor(private getProductByProductIdService: GetProductByProductIdService){}

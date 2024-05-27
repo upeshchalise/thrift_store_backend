@@ -10,7 +10,7 @@ export class JWTUserAuthorizer implements IAuthorizer<Request, Response, NextFun
         const {authorization} = req.headers;
         const tokenArray = authorization !== undefined ? authorization.split(' ') : [];
         const token = tokenArray[1];
-
+        console.log("token",token);
         try {
             const validRoles = [UserRole.ADMIN, UserRole.CUSTOMER];
             const payload: Payload = jwt.verify(token, process.env.JWT_SECRET_KEY!) as Payload

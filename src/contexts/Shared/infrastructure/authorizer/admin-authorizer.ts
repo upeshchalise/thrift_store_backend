@@ -11,6 +11,7 @@ export class JWTAdminAuthorizer implements IAuthorizer<Request, Response, NextFu
         const tokenArray = authorization !== undefined ? authorization.split(' ') : [];
         const token = tokenArray[1];
         try {
+            console.log("aba yeta");
             const payload: Payload = jwt.verify(token, process.env.JWT_SECRET_KEY!) as Payload
             if(payload.role === UserRole.ADMIN && payload.scope.includes(TokenScope.ADMIN_ACCESS)) {
                 req.user = payload;

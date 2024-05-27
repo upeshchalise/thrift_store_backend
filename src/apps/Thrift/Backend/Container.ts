@@ -7,6 +7,7 @@ import { createPrismaClient } from '../../../contexts/Shared/infrastructure/pers
 import { upload } from '../../../contexts/Shared/infrastructure/uploads/image-upload';
 import { CreateProductService } from '../../../contexts/Thrift/Product/application/create-product.service';
 import { DeleteProductService } from '../../../contexts/Thrift/Product/application/delete-product.service';
+import { GetAllProductService } from '../../../contexts/Thrift/Product/application/get-all-product.service';
 import { GetProductByProductIdService } from '../../../contexts/Thrift/Product/application/get-product-by-product-id.service';
 import { GetProductsByUserIdService } from '../../../contexts/Thrift/Product/application/get-produts-by-user-id.service';
 import { UpdateProductService } from '../../../contexts/Thrift/Product/application/update-product.service';
@@ -74,6 +75,8 @@ export class Container {
         updateProductController: asClass(controllers.UpdateProductController),
         deleteProductService:asClass(DeleteProductService).singleton(),
         deleteProductController: asClass(controllers.DeleteProductController), 
+        getAllProductService: asClass(GetAllProductService).singleton(),
+        getAllProductController: asClass(controllers.GetAllProductsController),
         productRepository: asClass(PrismaProductRepository).singleton()
       })
       .register({

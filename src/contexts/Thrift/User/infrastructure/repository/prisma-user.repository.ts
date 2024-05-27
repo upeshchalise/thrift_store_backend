@@ -49,6 +49,7 @@ export class PrismaUserRepository implements IUserRepository {
                 last_name: true,
                 email: true,
                 role: true,
+                imageUrl: true
             }
         })
     }
