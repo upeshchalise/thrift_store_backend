@@ -57,8 +57,8 @@ console.log("object", search);
                     OR : [
                         {name: {contains: search, mode: 'insensitive'}},
                         {description: {contains: search, mode: 'insensitive'}},
-                        // {quantity: Number(search)},
-                        // {price: Number(search)},
+                        {quantity: Number(search)},
+                        {price: Number(search)},
                     ]
                     } : {}
                 ],

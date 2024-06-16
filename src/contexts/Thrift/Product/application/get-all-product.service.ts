@@ -6,7 +6,7 @@ export class GetAllProductService {
     constructor(private productRepository: PrismaProductRepository){}
   
     async invoke(page:number,pageSize:number,search:string):  Promise<PaginationResult<Product>> {
-        console.log(search,'search');
+        // console.log(search,'search');
         return this.productRepository.getAllProducts(page,pageSize,search)
     }
 }
