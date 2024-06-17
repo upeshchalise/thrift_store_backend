@@ -5,6 +5,8 @@ import { JWTUserAuthorizer } from '../../../contexts/Shared/infrastructure/autho
 import { ErrorMiddleware } from '../../../contexts/Shared/infrastructure/middleware/error-middleware';
 import { createPrismaClient } from '../../../contexts/Shared/infrastructure/persistence/prisma';
 import { upload } from '../../../contexts/Shared/infrastructure/uploads/image-upload';
+import { MakeOrderService } from '../../../contexts/Thrift/Orders/application/make-order.service';
+import { PrismaOrderRepository } from '../../../contexts/Thrift/Orders/infrastructure/repository/prisma-orders.repository';
 import { CreateProductService } from '../../../contexts/Thrift/Product/application/create-product.service';
 import { DeleteProductService } from '../../../contexts/Thrift/Product/application/delete-product.service';
 import { GetAllProductService } from '../../../contexts/Thrift/Product/application/get-all-product.service';
@@ -78,6 +80,11 @@ export class Container {
         getAllProductService: asClass(GetAllProductService).singleton(),
         getAllProductController: asClass(controllers.GetAllProductsController),
         productRepository: asClass(PrismaProductRepository).singleton()
+      })
+      .register({
+        makeOrderService: asClass(MakeOrderService).singleton(),
+        makeOrderController: asClass(controllers.MakeOrderController).singleton(),
+        orderRepository: asClass(PrismaOrderRepository).singleton(),
       })
       .register({
         adminAuthorizer: asClass(JWTAdminAuthorizer).singleton(),
