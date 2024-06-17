@@ -1,4 +1,5 @@
 export * from './healthCheck/health-check.controller';
+export * from './orders/make-order.controller';
 export * from './products/create-product.controller';
 export * from './products/delete-product.controller';
 export * from './products/get-all-products.controller';
