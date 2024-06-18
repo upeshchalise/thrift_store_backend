@@ -5,6 +5,7 @@ import { JWTUserAuthorizer } from '../../../contexts/Shared/infrastructure/autho
 import { ErrorMiddleware } from '../../../contexts/Shared/infrastructure/middleware/error-middleware';
 import { createPrismaClient } from '../../../contexts/Shared/infrastructure/persistence/prisma';
 import { upload } from '../../../contexts/Shared/infrastructure/uploads/image-upload';
+import { GetOrderByUserIdService } from '../../../contexts/Thrift/Orders/application/get-order-by-user-id.service';
 import { MakeOrderService } from '../../../contexts/Thrift/Orders/application/make-order.service';
 import { PrismaOrderRepository } from '../../../contexts/Thrift/Orders/infrastructure/repository/prisma-orders.repository';
 import { CreateProductService } from '../../../contexts/Thrift/Product/application/create-product.service';
@@ -27,18 +28,18 @@ import { MasterRouter } from './routes/routes';
 import { Server } from './server';
 
 export class Container {
-    private readonly container: AwilixContainer;
+  private readonly container: AwilixContainer;
 
-    constructor() {
-      this.container = createContainer({
-        injectionMode: InjectionMode.CLASSIC
-      });
-  
-      this.register();
-    }
+  constructor() {
+    this.container = createContainer({
+      injectionMode: InjectionMode.CLASSIC
+    });
 
-    public register(): void {
-        this.container
+    this.register();
+  }
+
+  public register(): void {
+    this.container
       .register({
         //core components
         server: asClass(Server).singleton(),
@@ -73,10 +74,10 @@ export class Container {
         getProductsByUserIdService: asClass(GetProductsByUserIdService).singleton(),
         getProductByProductIdService: asClass(GetProductByProductIdService).singleton(),
         getProductByProductIdController: asClass(controllers.GetProductByProductIdController),
-        updateProductService:asClass(UpdateProductService).singleton(),
+        updateProductService: asClass(UpdateProductService).singleton(),
         updateProductController: asClass(controllers.UpdateProductController),
-        deleteProductService:asClass(DeleteProductService).singleton(),
-        deleteProductController: asClass(controllers.DeleteProductController), 
+        deleteProductService: asClass(DeleteProductService).singleton(),
+        deleteProductController: asClass(controllers.DeleteProductController),
         getAllProductService: asClass(GetAllProductService).singleton(),
         getAllProductController: asClass(controllers.GetAllProductsController),
         productRepository: asClass(PrismaProductRepository).singleton()
@@ -84,6 +85,8 @@ export class Container {
       .register({
         makeOrderService: asClass(MakeOrderService).singleton(),
         makeOrderController: asClass(controllers.MakeOrderController).singleton(),
+        getOrderByUserIdService: asClass(GetOrderByUserIdService).singleton(),
+        getOrdersByUserIdController: asClass(controllers.GetOrdersByUserIdController).singleton(),
         orderRepository: asClass(PrismaOrderRepository).singleton(),
       })
       .register({
@@ -95,9 +98,9 @@ export class Container {
         createAdminSeeder: asClass(CreateAdminSeeder).singleton(),
         createProductSeeder: asClass(CreateProductSeeder).singleton()
       })
-    }
+  }
 
-    public invoke(): AwilixContainer {
-        return this.container
-    }
+  public invoke(): AwilixContainer {
+    return this.container
+  }
 }

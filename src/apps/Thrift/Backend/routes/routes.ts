@@ -2,6 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 import { IAuthorizer } from '../../../../contexts/Shared/domain/model/authentication/IAuthorizer';
 import * as controllers from '../controllers';
 import { healthCheckRoutesHandler } from './health-check.routes';
+import { orderRoutesHandler } from './order/order.routes';
 import { productRoutesHandler } from './products/products.routes';
 import { UserRoutesHandler } from './user/user.routes';
 
@@ -18,14 +19,16 @@ export const MasterRouter = (
     updateProductController: controllers.UpdateProductController,
     deleteProductController: controllers.DeleteProductController,
     getAllProductController: controllers.GetAllProductsController,
-    customerAuthorizer: IAuthorizer<Request,Response,NextFunction>,
-    userAuthorizer: IAuthorizer<Request,Response,NextFunction>,
-    adminAuthorizer:IAuthorizer<Request,Response,NextFunction>
-) : Router => {
+    makeOrderController: controllers.MakeOrderController,
+    getOrdersByUserIdController: controllers.GetOrdersByUserIdController,
+    customerAuthorizer: IAuthorizer<Request, Response, NextFunction>,
+    userAuthorizer: IAuthorizer<Request, Response, NextFunction>,
+    adminAuthorizer: IAuthorizer<Request, Response, NextFunction>
+): Router => {
     const apiRouter = Router();
     healthCheckRoutesHandler(healthCheckControllers, apiRouter);
-    UserRoutesHandler(getUserByEmailController, createUserController,loginUserController,getUserByIdController,updateUserController, userAuthorizer,apiRouter)
-    productRoutesHandler(createProductController,getProductByProductIdController,getProductsByUserIdController,updateProductController,deleteProductController,getAllProductController,customerAuthorizer,userAuthorizer,adminAuthorizer, apiRouter)
-
+    UserRoutesHandler(getUserByEmailController, createUserController, loginUserController, getUserByIdController, updateUserController, userAuthorizer, apiRouter)
+    productRoutesHandler(createProductController, getProductByProductIdController, getProductsByUserIdController, updateProductController, deleteProductController, getAllProductController, customerAuthorizer, userAuthorizer, adminAuthorizer, apiRouter)
+    orderRoutesHandler(makeOrderController, getOrdersByUserIdController, userAuthorizer, apiRouter);
     return apiRouter
 }
