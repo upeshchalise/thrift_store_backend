@@ -6,6 +6,6 @@ import * as controllers from '../../controllers';
 
 export const orderRoutesHandler = (makeOrderController: controllers.MakeOrderController, getOrdersByUserIdController: controllers.GetOrdersByUserIdController, userAuthorizer: IAuthorizer<Request, Response, NextFunction>, router: Router): Router => {
     router.post('/user/:userId/orders/create', userAuthorizer.authorize, makeOrderController.validate, makeOrderController.invoke.bind(makeOrderController))
-    router.get('/user/:userId/orders', userAuthorizer.authorize, getOrdersByUserIdController.invoke.bind(getOrdersByUserIdController))
+    router.get('/orders/user/:userId', userAuthorizer.authorize, getOrdersByUserIdController.invoke.bind(getOrdersByUserIdController))
     return router
 }

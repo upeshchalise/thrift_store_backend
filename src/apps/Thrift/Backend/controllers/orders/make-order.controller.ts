@@ -26,6 +26,7 @@ export class MakeOrderController implements Controller {
     ]
     public async invoke(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
+            // console.log("first", req.params.userId)
             await this.makeOrderService.invoke({ userId: req.params.userId, total_amount: req.body.total_amount, status: OrderStatus.PENDING, order_items: req.body.order_items });
             res.status(httpStatus.OK).send()
         } catch (error) {

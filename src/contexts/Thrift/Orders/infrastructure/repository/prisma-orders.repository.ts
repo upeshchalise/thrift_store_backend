@@ -32,10 +32,17 @@ export class PrismaOrderRepository implements IOrderRepository {
                 user_id: userId
             },
             include: {
-                order_items: true
+                order_items: {
+                    include: {
+                        product: true
+                    }
+                },
+            },
+            orderBy: {
+                created_at: 'desc'
             }
         })
-        console.log(response);
+        // console.log(response);
         return response
     }
 }
