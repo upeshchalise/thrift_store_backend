@@ -8,6 +8,8 @@ import { upload } from '../../../contexts/Shared/infrastructure/uploads/image-up
 import { GetOrderByUserIdService } from '../../../contexts/Thrift/Orders/application/get-order-by-user-id.service';
 import { GetOrderForAdminService } from '../../../contexts/Thrift/Orders/application/get-orderes-for-admin.service';
 import { MakeOrderService } from '../../../contexts/Thrift/Orders/application/make-order.service';
+import { MarkOrderDeliveredService } from '../../../contexts/Thrift/Orders/application/mark-order-delivered.service';
+import { OrderDetailService } from '../../../contexts/Thrift/Orders/application/order-details.service';
 import { PrismaOrderRepository } from '../../../contexts/Thrift/Orders/infrastructure/repository/prisma-orders.repository';
 import { CreateProductService } from '../../../contexts/Thrift/Product/application/create-product.service';
 import { DeleteProductService } from '../../../contexts/Thrift/Product/application/delete-product.service';
@@ -90,6 +92,10 @@ export class Container {
         getOrdersByUserIdController: asClass(controllers.GetOrdersByUserIdController).singleton(),
         getOrderForAdminService: asClass(GetOrderForAdminService).singleton(),
         getOrdersForAdminController: asClass(controllers.GetOrdersForAdminController).singleton(),
+        orderDetailService: asClass(OrderDetailService).singleton(),
+        getOrderDetailsController: asClass(controllers.GetOrderDetailsController).singleton(),
+        markOrderDeliveredService: asClass(MarkOrderDeliveredService).singleton(),
+        markOrderDeliveredController: asClass(controllers.MarkOrderDeliveredController).singleton(),
         orderRepository: asClass(PrismaOrderRepository).singleton(),
       })
       .register({

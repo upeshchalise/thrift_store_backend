@@ -47,6 +47,8 @@ export class PrismaOrderRepository implements IOrderRepository {
     }
 
     public async getAllOrdersForAdmin(): Promise<GetOrderByUserIdResponse | any> {
+        let total_sale: number = 0;
+        let total_quantity: number = 0;
         const response = await this.db.order.findMany({
             include: {
                 order_items: {
@@ -68,7 +70,59 @@ export class PrismaOrderRepository implements IOrderRepository {
                 created_at: 'desc'
             }
         })
+        response?.forEach((item) => {
+            if (item.status === 'DELIVERED') {
+                total_sale += item.total_amount
+            }
+        })
+        // response.forEach((item) => {
+        //     item.order_items.forEach((i) => {
+        //         total_quantity += i.quantity
+        //     })
+        // })
         // console.log(response);
-        return response
+        return { response, total_sale, total_quantity }
+    }
+
+    public async orderDetail(order_id: string): Promise<any> {
+        return await this.db.order.findUnique({
+            where: {
+                id: order_id
+            },
+            select: {
+                id: true,
+                order_date: true,
+                status: true,
+                total_amount: true,
+                order_items: {
+                    select: {
+                        product: true,
+                        quantity: true,
+                        unit_price: true,
+                        product_id: true
+                    }
+                },
+                user: {
+                    select: {
+                        email: true,
+                        first_name: true,
+                        last_name: true,
+                        id: true,
+                        imageUrl: true,
+                    }
+                }
+            }
+        })
+    }
+
+    public async markOrderDelivered(order_id: string): Promise<any> {
+        await this.db.order.update({
+            where: {
+                id: order_id
+            }, data: {
+                status: OrderStatus.DELIVERED,
+                updated_at: new Date(Date.now())
+            }
+        })
     }
 }
