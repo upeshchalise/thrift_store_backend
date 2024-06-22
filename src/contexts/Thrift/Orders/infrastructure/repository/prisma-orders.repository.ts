@@ -47,8 +47,10 @@ export class PrismaOrderRepository implements IOrderRepository {
     }
 
     public async getAllOrdersForAdmin(): Promise<GetOrderByUserIdResponse | any> {
+
         let total_sale: number = 0;
         let total_quantity: number = 0;
+
         const response = await this.db.order.findMany({
             include: {
                 order_items: {
@@ -70,6 +72,7 @@ export class PrismaOrderRepository implements IOrderRepository {
                 created_at: 'desc'
             }
         })
+
         response?.forEach((item) => {
             if (item.status === 'DELIVERED') {
                 total_sale += item.total_amount
@@ -124,5 +127,6 @@ export class PrismaOrderRepository implements IOrderRepository {
                 updated_at: new Date(Date.now())
             }
         })
+
     }
 }

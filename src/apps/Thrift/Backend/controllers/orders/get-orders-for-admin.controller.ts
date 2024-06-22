@@ -1,3 +1,4 @@
+
 import { NextFunction, Response } from "express";
 import httpStatus from "http-status";
 import { HTTP403Error, HTTP404Error } from "../../../../../contexts/Shared/domain/errors/http-exception";
@@ -16,6 +17,7 @@ export class GetOrdersForAdminController implements Controller {
             // console.log("user_id", req.headers.user_id)
             const { user_id } = req.user
             const userExist = await this.getUserByIdService.invoke(user_id as string)
+
             if (!userExist) {
                 throw new HTTP404Error(MESSAGE_CODES.USER.USER_NOT_FOUND)
             }

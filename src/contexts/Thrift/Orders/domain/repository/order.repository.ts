@@ -7,4 +7,5 @@ export interface IOrderRepository {
     getAllOrdersForAdmin(): Promise<GetOrderByUserIdResponse | null>
     orderDetail(order_id: string): Promise<any>
     markOrderDelivered(order_id: string): Promise<any>
+
 }
