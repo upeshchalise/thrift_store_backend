@@ -5,12 +5,12 @@ import { upload } from "../../../../../contexts/Shared/infrastructure/uploads/im
 import * as controllers from '../../controllers';
 
 
-export const UserRoutesHandler = (getUserByEmailController:controllers.GetUserByEmailController,createUserController:controllers.CreateUserController, loginUserController:controllers.LoginUserController, getUserByIdController: controllers.GetUserByIdController,updateUserController: controllers.UpdateUserController,userAuthorizer:IAuthorizer<Request,Response,NextFunction>,router: Router): Router => {
+export const UserRoutesHandler = (getUserByEmailController: controllers.GetUserByEmailController, createUserController: controllers.CreateUserController, loginUserController: controllers.LoginUserController, getUserByIdController: controllers.GetUserByIdController, updateUserController: controllers.UpdateUserController, userAuthorizer: IAuthorizer<Request, Response, NextFunction>, router: Router): Router => {
     router.get('/user/email', getUserByEmailController.invoke.bind(getUserByEmailController));
     // register user
-    router.post('/user/create',upload.single('file'), createUserController.validate, createUserController.invoke.bind(createUserController));
+    router.post('/user/create', upload.single('file'), createUserController.validate, createUserController.invoke.bind(createUserController));
     // login user
-    router.post('/user/login',loginUserController.validate, loginUserController.invoke.bind(loginUserController))
+    router.post('/user/login', loginUserController.validate, loginUserController.invoke.bind(loginUserController))
     // get user by id
     router.get('/user/:userId', getUserByIdController.invoke.bind(getUserByIdController))
     // update user

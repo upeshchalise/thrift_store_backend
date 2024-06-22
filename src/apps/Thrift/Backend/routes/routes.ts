@@ -22,6 +22,8 @@ export const MasterRouter = (
     makeOrderController: controllers.MakeOrderController,
     getOrdersByUserIdController: controllers.GetOrdersByUserIdController,
     getOrdersForAdminController: controllers.GetOrdersForAdminController,
+    getOrderDetailsController: controllers.GetOrderDetailsController,
+    markOrderDeliveredController: controllers.MarkOrderDeliveredController,
     customerAuthorizer: IAuthorizer<Request, Response, NextFunction>,
     userAuthorizer: IAuthorizer<Request, Response, NextFunction>,
     adminAuthorizer: IAuthorizer<Request, Response, NextFunction>
@@ -30,6 +32,6 @@ export const MasterRouter = (
     healthCheckRoutesHandler(healthCheckControllers, apiRouter);
     UserRoutesHandler(getUserByEmailController, createUserController, loginUserController, getUserByIdController, updateUserController, userAuthorizer, apiRouter)
     productRoutesHandler(createProductController, getProductByProductIdController, getProductsByUserIdController, updateProductController, deleteProductController, getAllProductController, customerAuthorizer, userAuthorizer, adminAuthorizer, apiRouter)
-    orderRoutesHandler(makeOrderController, getOrdersByUserIdController, getOrdersForAdminController, userAuthorizer, adminAuthorizer, apiRouter);
+    orderRoutesHandler(makeOrderController, getOrdersByUserIdController, getOrdersForAdminController, getOrderDetailsController, markOrderDeliveredController, userAuthorizer, adminAuthorizer, apiRouter);
     return apiRouter
 }

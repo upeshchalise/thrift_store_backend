@@ -8,7 +8,7 @@ import {
 import { MESSAGE_CODES } from "../utils/message-codes";
 
 export class ErrorMiddleware {
-  constructor() {}
+  constructor() { }
 
   public routeNotFoundErrorHandler = (_req: Request, res: Response): void => {
     // res.status(httpStatus.NOT_FOUND).json({ message: MESSAGE_CODES.NOT_FOUND });

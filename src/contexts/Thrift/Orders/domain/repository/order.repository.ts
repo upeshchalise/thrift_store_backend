@@ -5,4 +5,7 @@ export interface IOrderRepository {
     makeOrder(user_id: string, total_amount: number, status: OrderStatus, order_items: OrderItems[]): Promise<void>
     getOrdersByUserId(userId: string): Promise<GetOrderByUserIdResponse>
     getAllOrdersForAdmin(): Promise<GetOrderByUserIdResponse | null>
+    orderDetail(order_id: string): Promise<any>
+    markOrderDelivered(order_id: string): Promise<any>
+
 }
