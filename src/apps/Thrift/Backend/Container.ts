@@ -6,6 +6,7 @@ import { ErrorMiddleware } from '../../../contexts/Shared/infrastructure/middlew
 import { createPrismaClient } from '../../../contexts/Shared/infrastructure/persistence/prisma';
 import { upload } from '../../../contexts/Shared/infrastructure/uploads/image-upload';
 import { GetOrderByUserIdService } from '../../../contexts/Thrift/Orders/application/get-order-by-user-id.service';
+import { GetOrderForAdminService } from '../../../contexts/Thrift/Orders/application/get-orderes-for-admin.service';
 import { MakeOrderService } from '../../../contexts/Thrift/Orders/application/make-order.service';
 import { PrismaOrderRepository } from '../../../contexts/Thrift/Orders/infrastructure/repository/prisma-orders.repository';
 import { CreateProductService } from '../../../contexts/Thrift/Product/application/create-product.service';
@@ -87,6 +88,8 @@ export class Container {
         makeOrderController: asClass(controllers.MakeOrderController).singleton(),
         getOrderByUserIdService: asClass(GetOrderByUserIdService).singleton(),
         getOrdersByUserIdController: asClass(controllers.GetOrdersByUserIdController).singleton(),
+        getOrderForAdminService: asClass(GetOrderForAdminService).singleton(),
+        getOrdersForAdminController: asClass(controllers.GetOrdersForAdminController).singleton(),
         orderRepository: asClass(PrismaOrderRepository).singleton(),
       })
       .register({

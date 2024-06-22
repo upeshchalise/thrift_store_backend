@@ -29,7 +29,7 @@ export class PrismaOrderRepository implements IOrderRepository {
     public async getOrdersByUserId(userId: string): Promise<GetOrderByUserIdResponse | any> {
         const response = await this.db.order.findMany({
             where: {
-                user_id: userId
+                user_id: userId,
             },
             include: {
                 order_items: {
@@ -37,6 +37,32 @@ export class PrismaOrderRepository implements IOrderRepository {
                         product: true
                     }
                 },
+            },
+            orderBy: {
+                created_at: 'desc'
+            }
+        })
+        // console.log(response);
+        return response
+    }
+
+    public async getAllOrdersForAdmin(): Promise<GetOrderByUserIdResponse | any> {
+        const response = await this.db.order.findMany({
+            include: {
+                order_items: {
+                    include: {
+                        product: true
+                    }
+                },
+                user: {
+                    select: {
+                        id: true,
+                        imageUrl: true,
+                        email: true,
+                        first_name: true,
+                        last_name: true
+                    }
+                }
             },
             orderBy: {
                 created_at: 'desc'
