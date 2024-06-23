@@ -9,13 +9,13 @@ const adminSeeder = container.invoke().resolve<CreateAdminSeeder>('createAdminSe
 const productSeeder = container.invoke().resolve<CreateProductSeeder>('createProductSeeder');
 
 server
-.start()
-.then(async () => {
-    console.log("server started");
-    adminSeeder.addAdminSeeder();
-    productSeeder.seedProducts()
-})
-.catch((err: Error) => {
-    console.log(err);
-    process.exit(1)
-})
+    .start()
+    .then(async () => {
+        console.log("server started");
+        adminSeeder.addAdminSeeder();
+        // productSeeder.seedProducts()
+    })
+    .catch((err: Error) => {
+        console.log(err);
+        process.exit(1)
+    })
