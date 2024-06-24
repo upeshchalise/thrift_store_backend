@@ -12,6 +12,7 @@ export class MakeOrderController implements Controller {
     public validate = [
         param('userId').exists().withMessage(MESSAGE_CODES.USER.INVALID_USER_ID).notEmpty().withMessage(MESSAGE_CODES.USER.INVALID_USER_ID).isString().withMessage(MESSAGE_CODES.USER.INVALID_USER_ID),
         body('total_amount').exists().withMessage(MESSAGE_CODES.ORDER.INVALID_AMOUNT).notEmpty().withMessage(MESSAGE_CODES.ORDER.INVALID_AMOUNT).isNumeric().withMessage(MESSAGE_CODES.ORDER.INVALID_AMOUNT).bail(),
+        body("destination").optional().isString().withMessage(MESSAGE_CODES.ORDER.INVALID_DESTINATION).bail(),
         body('order_items').isArray().withMessage(MESSAGE_CODES.ORDER.INVALID_ORDER_ITEMS),
 
         body('order_items.*.product_id').exists().withMessage(MESSAGE_CODES.ORDER.INVALID_PRODUCT_ID)
@@ -27,7 +28,7 @@ export class MakeOrderController implements Controller {
     public async invoke(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             // console.log("first", req.params.userId)
-            await this.makeOrderService.invoke({ userId: req.params.userId, total_amount: req.body.total_amount, status: OrderStatus.PENDING, order_items: req.body.order_items });
+            await this.makeOrderService.invoke({ userId: req.params.userId, total_amount: req.body.total_amount, status: OrderStatus.PENDING, destination: req.body.destination, order_items: req.body.order_items });
             res.status(httpStatus.OK).send()
         } catch (error) {
             next(error)

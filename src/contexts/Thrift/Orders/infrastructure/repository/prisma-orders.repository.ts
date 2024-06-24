@@ -5,7 +5,7 @@ import { IOrderRepository } from "../../domain/repository/order.repository";
 
 export class PrismaOrderRepository implements IOrderRepository {
     constructor(private db: PrismaClient) { }
-    public async makeOrder(user_id: string, total_amount: number, status: OrderStatus, order_items: OrderItems[]): Promise<void> {
+    public async makeOrder(user_id: string, total_amount: number, status: OrderStatus, destination: string, order_items: OrderItems[]): Promise<void> {
         const id = randomUUID()
         await this.db.order.create({
             data: {
@@ -13,6 +13,7 @@ export class PrismaOrderRepository implements IOrderRepository {
                 user_id,
                 total_amount,
                 status,
+                destination,
                 order_items: {
                     createMany: {
                         data: order_items.map((item: any) => ({
@@ -96,6 +97,7 @@ export class PrismaOrderRepository implements IOrderRepository {
                 id: true,
                 order_date: true,
                 status: true,
+                destination: true,
                 total_amount: true,
                 order_items: {
                     select: {

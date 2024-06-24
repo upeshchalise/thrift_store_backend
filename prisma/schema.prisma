@@ -57,6 +57,7 @@ model Order {
     order_date   DateTime?    @default(now())
     total_amount Float
     status       OrderStatus?
+    destination  String?
     order_items  OrderItems[]
     created_at   DateTime?    @default(now())
     updated_at   DateTime?    @updatedAt
